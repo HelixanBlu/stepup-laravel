@@ -1,0 +1,32 @@
+$kind: http-request
+method: GET
+url: '{{base_url}}/badges/{{badge_id}}'
+order: 3000
+headers:
+  - key: Accept
+    value: application/json
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status code adalah 200", function () {
+          pm.response.to.have.status(200);
+      });
+
+      pm.test("Response success = true", function () {
+          var json = pm.response.json();
+          pm.expect(json.success).to.be.true;
+      });
+
+      pm.test("Response memiliki data badge", function () {
+          var json = pm.response.json();
+          pm.expect(json.data).to.be.an('object');
+          pm.expect(json.data).to.have.property('id');
+          pm.expect(json.data).to.have.property('name');
+          pm.expect(json.data).to.have.property('category');
+          pm.expect(json.data).to.have.property('rarity');
+      });
+
+      pm.test("Response time kurang dari 2000ms", function () {
+          pm.expect(pm.response.responseTime).to.be.below(2000);
+      });

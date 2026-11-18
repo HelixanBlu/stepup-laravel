@@ -1,0 +1,14 @@
+name: StepUp Laravel - Local
+values:
+  - key: base_url
+    value: 'http://127.0.0.1:8000/api'
+    enabled: true
+  - key: reward_id
+    value: ''
+    enabled: true
+  - key: collection_id
+    value: ''
+    enabled: true
+  - key: badge_id
+    value: ''
+    enabled: true

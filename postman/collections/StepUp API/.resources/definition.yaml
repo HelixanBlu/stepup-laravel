@@ -1,0 +1,5 @@
+$kind: collection
+name: StepUp API
+description: |-
+  Collection untuk menguji API StepUp Laravel.
+  Mencakup endpoint Rewards, Collections, dan Badges (CRUD lengkap).

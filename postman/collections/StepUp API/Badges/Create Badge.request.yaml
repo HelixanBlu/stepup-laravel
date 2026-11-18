@@ -1,0 +1,62 @@
+$kind: http-request
+method: POST
+url: '{{base_url}}/badges/post'
+order: 2000
+headers:
+  - key: Content-Type
+    value: application/json
+  - key: Accept
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "name": "Badge Pemula",
+      "description": "Diberikan kepada pengguna yang menyelesaikan tantangan pertama",
+      "category": "challenge",
+      "rarity": "common",
+      "unlock_requirement": "Selesaikan 1 tantangan",
+      "status": "active"
+    }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status code adalah 201", function () {
+          pm.response.to.have.status(201);
+      });
+
+      pm.test("Response success = true", function () {
+          var json = pm.response.json();
+          pm.expect(json.success).to.be.true;
+      });
+
+      pm.test("Response memiliki data badge baru", function () {
+          var json = pm.response.json();
+          pm.expect(json.data).to.be.an('object');
+          pm.expect(json.data).to.have.property('name');
+          pm.expect(json.data).to.have.property('category');
+          pm.expect(json.data).to.have.property('rarity');
+          pm.expect(json.data).to.have.property('unlock_requirement');
+      });
+
+      pm.test("Category valid", function () {
+          var json = pm.response.json();
+          pm.expect(['challenge','collection','activity','streak','special_event']).to.include(json.data.category);
+      });
+
+      pm.test("Rarity valid", function () {
+          var json = pm.response.json();
+          pm.expect(['common','rare','epic','legendary']).to.include(json.data.rarity);
+      });
+
+      pm.test("Simpan badge_id ke environment", function () {
+          var json = pm.response.json();
+          if (json.data && json.data.id) {
+              pm.environment.set("badge_id", json.data.id);
+          }
+      });
+
+      pm.test("Response time kurang dari 2000ms", function () {
+          pm.expect(pm.response.responseTime).to.be.below(2000);
+      });

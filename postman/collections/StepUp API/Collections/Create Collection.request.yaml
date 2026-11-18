@@ -1,0 +1,55 @@
+$kind: http-request
+method: POST
+url: '{{base_url}}/collections/post'
+order: 2000
+headers:
+  - key: Content-Type
+    value: application/json
+  - key: Accept
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "name": "Koleksi Pemula",
+      "description": "Koleksi tantangan untuk pemula",
+      "difficulty": "easy",
+      "estimated_duration": "30 menit",
+      "status": "active"
+    }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status code adalah 201", function () {
+          pm.response.to.have.status(201);
+      });
+
+      pm.test("Response success = true", function () {
+          var json = pm.response.json();
+          pm.expect(json.success).to.be.true;
+      });
+
+      pm.test("Response memiliki data collection baru", function () {
+          var json = pm.response.json();
+          pm.expect(json.data).to.be.an('object');
+          pm.expect(json.data).to.have.property('name');
+          pm.expect(json.data).to.have.property('difficulty');
+          pm.expect(json.data).to.have.property('status');
+      });
+
+      pm.test("Difficulty valid", function () {
+          var json = pm.response.json();
+          pm.expect(['easy','medium','hard']).to.include(json.data.difficulty);
+      });
+
+      pm.test("Simpan collection_id ke environment", function () {
+          var json = pm.response.json();
+          if (json.data && json.data.id) {
+              pm.environment.set("collection_id", json.data.id);
+          }
+      });
+
+      pm.test("Response time kurang dari 2000ms", function () {
+          pm.expect(pm.response.responseTime).to.be.below(2000);
+      });

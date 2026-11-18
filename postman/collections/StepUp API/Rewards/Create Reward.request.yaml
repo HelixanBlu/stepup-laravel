@@ -1,0 +1,48 @@
+$kind: http-request
+method: POST
+url: '{{base_url}}/rewards/post'
+order: 2000
+headers:
+  - key: Content-Type
+    value: application/json
+  - key: Accept
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "name_reward": "Voucher Belanja",
+      "description": "Voucher belanja senilai Rp 50.000",
+      "poin": 500,
+      "stok": 10
+    }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status code adalah 201", function () {
+          pm.response.to.have.status(201);
+      });
+
+      pm.test("Response success = true", function () {
+          var json = pm.response.json();
+          pm.expect(json.success).to.be.true;
+      });
+
+      pm.test("Response memiliki data reward baru", function () {
+          var json = pm.response.json();
+          pm.expect(json.data).to.be.an('object');
+          pm.expect(json.data).to.have.property('name_reward');
+          pm.expect(json.data).to.have.property('poin');
+      });
+
+      pm.test("Simpan reward_id ke environment", function () {
+          var json = pm.response.json();
+          if (json.data && json.data.id_reward) {
+              pm.environment.set("reward_id", json.data.id_reward);
+          }
+      });
+
+      pm.test("Response time kurang dari 2000ms", function () {
+          pm.expect(pm.response.responseTime).to.be.below(2000);
+      });

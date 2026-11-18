@@ -1,0 +1,43 @@
+$kind: http-request
+method: POST
+url: '{{base_url}}/badges/update'
+order: 4000
+headers:
+  - key: Content-Type
+    value: application/json
+  - key: Accept
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "id": "{{badge_id}}",
+      "name": "Badge Pemula Updated",
+      "description": "Diberikan kepada pengguna yang menyelesaikan 3 tantangan",
+      "category": "challenge",
+      "rarity": "rare",
+      "unlock_requirement": "Selesaikan 3 tantangan",
+      "status": "active"
+    }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Status code adalah 200", function () {
+          pm.response.to.have.status(200);
+      });
+
+      pm.test("Response success = true", function () {
+          var json = pm.response.json();
+          pm.expect(json.success).to.be.true;
+      });
+
+      pm.test("Response memiliki data badge yang diupdate", function () {
+          var json = pm.response.json();
+          pm.expect(json.data).to.be.an('object');
+          pm.expect(json.data).to.have.property('name');
+      });
+
+      pm.test("Response time kurang dari 2000ms", function () {
+          pm.expect(pm.response.responseTime).to.be.below(2000);
+      });
