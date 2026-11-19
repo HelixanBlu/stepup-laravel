@@ -1,0 +1,39 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Yajra\Oci8\Eloquent\OracleEloquent as Model;
+
+class ChallengeParticipant extends Model
+{
+    use HasFactory;
+
+    protected $table = 'challenge_participants';
+
+    protected $fillable = [
+        'challenge_id',
+        'user_id',
+        'current_progress',
+        'completion_status',
+        'joined_at',
+    ];
+
+    protected $casts = [
+        'challenge_id' => 'integer',
+        'user_id' => 'integer',
+        'current_progress' => 'integer',
+        'joined_at' => 'datetime',
+    ];
+
+    public function challenge(): BelongsTo
+    {
+        return $this->belongsTo(Challenge::class, 'challenge_id');
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+}

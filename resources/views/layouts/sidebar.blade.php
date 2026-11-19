@@ -48,9 +48,10 @@
               <span x-show="open" x-transition.opacity class="whitespace-nowrap">Rewards</span>
           </a>
 
-          {{-- Collections (placeholder, aktifkan nanti) --}}
-          <a href="#"
-             class="flex items-center gap-3 px-4 py-2.5 text-sm rounded-md mx-2 transition-colors text-gray-500 cursor-not-allowed">
+          {{-- Collections --}}
+          <a href="{{ route('admin.collections.index') }}"
+             class="flex items-center gap-3 px-4 py-2.5 text-sm rounded-md mx-2 transition-colors
+                    {{ request()->routeIs('admin.collections.*') ? 'bg-indigo-600 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">
               <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round"
   d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0  
@@ -72,9 +73,10 @@
               <span x-show="open" x-transition.opacity class="whitespace-nowrap">Badges</span>
           </a>
 
-          {{-- Challenges (placeholder) --}}
-          <a href="#"
-             class="flex items-center gap-3 px-4 py-2.5 text-sm rounded-md mx-2 transition-colors text-gray-500 cursor-not-allowed">
+          {{-- Challenges --}}
+          <a href="{{ route('admin.challenges.index') }}"
+             class="flex items-center gap-3 px-4 py-2.5 text-sm rounded-md mx-2 transition-colors
+                    {{ request()->routeIs('admin.challenges.*') ? 'bg-indigo-600 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">
               <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round"
                         d="M13 10V3L4 14h7v7l9-11h-7z" />

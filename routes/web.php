@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\Admin\ChallengeController as AdminChallengeController;
+use App\Http\Controllers\Admin\CollectionController as AdminCollectionController;
+use App\Http\Controllers\Admin\RewardController as AdminRewardController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\RewardController as AdminRewardController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -20,6 +22,8 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     Route::resource('rewards', AdminRewardController::class)->except(['show']);
+    Route::resource('challenges', AdminChallengeController::class)->except(['show']);
+    Route::resource('collections', AdminCollectionController::class);
 });
 
 require __DIR__.'/auth.php';
