@@ -74,7 +74,10 @@ class BadgeSeeder extends Seeder
         ];
 
         foreach ($badges as $badge) {
-            Badge::create($badge);
+            Badge::firstOrCreate(
+                ['name' => $badge['name']],
+                $badge,
+            );
         }
     }
 }

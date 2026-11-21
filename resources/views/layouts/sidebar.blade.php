@@ -60,9 +60,10 @@
               <span x-show="open" x-transition.opacity class="whitespace-nowrap">Collections</span>
           </a>
 
-          {{-- Badges (placeholder) --}}
-          <a href="#"
-             class="flex items-center gap-3 px-4 py-2.5 text-sm rounded-md mx-2 transition-colors text-gray-500 cursor-not-allowed">
+          {{-- Badges --}}
+          <a href="{{ route('admin.badges.index') }}"
+             class="flex items-center gap-3 px-4 py-2.5 text-sm rounded-md mx-2 transition-colors
+                    {{ request()->routeIs('admin.badges.*') ? 'bg-indigo-600 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white' }}">
               <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round"
   d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0   

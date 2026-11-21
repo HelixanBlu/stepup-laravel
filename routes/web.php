@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\BadgeController as AdminBadgeController;
 use App\Http\Controllers\Admin\ChallengeController as AdminChallengeController;
 use App\Http\Controllers\Admin\CollectionController as AdminCollectionController;
 use App\Http\Controllers\Admin\RewardController as AdminRewardController;
@@ -22,6 +23,7 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     Route::resource('rewards', AdminRewardController::class)->except(['show']);
+    Route::resource('badges', AdminBadgeController::class)->except(['show']);
     Route::resource('challenges', AdminChallengeController::class)->except(['show']);
     Route::resource('collections', AdminCollectionController::class);
 });
