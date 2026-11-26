@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Collection;
+use App\Models\UserCollection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -24,6 +25,7 @@ class CollectionController extends Controller
         $collections = $query->get()->map(function ($col) {
             $data = $col->toArray();
             $data['total_challenges'] = $col->challenges_count;
+
             return $data;
         });
 
@@ -52,9 +54,9 @@ class CollectionController extends Controller
         $coverName = null;
         if ($request->hasFile('cover_image')) {
             $file = $request->file('cover_image');
-            $coverName = time() . '-' . $file->getClientOriginalName();
+            $coverName = time().'-'.$file->getClientOriginalName();
             $destinationPath = public_path('uploads');
-            if (!File::isDirectory($destinationPath)) {
+            if (! File::isDirectory($destinationPath)) {
                 File::makeDirectory($destinationPath, 0755, true);
             }
             $file->move($destinationPath, $coverName);
@@ -85,7 +87,7 @@ class CollectionController extends Controller
     {
         $collection = Collection::with('challenges')->find($id);
 
-        if (!$collection) {
+        if (! $collection) {
             return response()->json([
                 'success' => false,
                 'message' => "Koleksi dengan ID {$id} tidak ditemukan",
@@ -110,7 +112,7 @@ class CollectionController extends Controller
         $id = $id ?? $request->input('id');
         $collection = Collection::find($id);
 
-        if (!$collection) {
+        if (! $collection) {
             return response()->json([
                 'success' => false,
                 'message' => "Koleksi dengan ID {$id} tidak ditemukan",
@@ -128,14 +130,14 @@ class CollectionController extends Controller
 
         if ($request->hasFile('cover_image')) {
             $file = $request->file('cover_image');
-            $coverName = time() . '-' . $file->getClientOriginalName();
+            $coverName = time().'-'.$file->getClientOriginalName();
             $destinationPath = public_path('uploads');
-            if (!File::isDirectory($destinationPath)) {
+            if (! File::isDirectory($destinationPath)) {
                 File::makeDirectory($destinationPath, 0755, true);
             }
 
-            if ($collection->cover_image && File::exists($destinationPath . '/' . $collection->cover_image)) {
-                File::delete($destinationPath . '/' . $collection->cover_image);
+            if ($collection->cover_image && File::exists($destinationPath.'/'.$collection->cover_image)) {
+                File::delete($destinationPath.'/'.$collection->cover_image);
             }
 
             $file->move($destinationPath, $coverName);
@@ -144,11 +146,21 @@ class CollectionController extends Controller
             $collection->cover_image = $request->input('cover_image');
         }
 
-        if (isset($validated['name'])) $collection->name = $validated['name'];
-        if ($request->has('description')) $collection->description = $request->input('description');
-        if (isset($validated['difficulty'])) $collection->difficulty = $validated['difficulty'];
-        if (isset($validated['estimated_duration'])) $collection->estimated_duration = $validated['estimated_duration'];
-        if (isset($validated['status'])) $collection->status = $validated['status'];
+        if (isset($validated['name'])) {
+            $collection->name = $validated['name'];
+        }
+        if ($request->has('description')) {
+            $collection->description = $request->input('description');
+        }
+        if (isset($validated['difficulty'])) {
+            $collection->difficulty = $validated['difficulty'];
+        }
+        if (isset($validated['estimated_duration'])) {
+            $collection->estimated_duration = $validated['estimated_duration'];
+        }
+        if (isset($validated['status'])) {
+            $collection->status = $validated['status'];
+        }
 
         $collection->save();
 
@@ -167,7 +179,7 @@ class CollectionController extends Controller
         $id = $id ?? $request->input('id');
         $collection = Collection::find($id);
 
-        if (!$collection) {
+        if (! $collection) {
             return response()->json([
                 'success' => false,
                 'message' => "Koleksi dengan ID {$id} tidak ditemukan",
@@ -175,7 +187,7 @@ class CollectionController extends Controller
         }
 
         if ($collection->cover_image) {
-            $oldPath = public_path('uploads/' . $collection->cover_image);
+            $oldPath = public_path('uploads/'.$collection->cover_image);
             if (File::exists($oldPath)) {
                 File::delete($oldPath);
             }
@@ -186,6 +198,93 @@ class CollectionController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Koleksi berhasil dihapus',
+        ]);
+    }
+
+    /**
+     * User joins a collection.
+     */
+    public function join(Request $request, int|string|null $id = null): JsonResponse
+    {
+        $collectionId = $id ?? $request->input('collection_id');
+        $userId = $request->input('user_id');
+
+        $request->validate([
+            'user_id' => ['required', 'integer', 'exists:users,id'],
+        ]);
+
+        $collection = Collection::find($collectionId);
+        if (! $collection) {
+            return response()->json(['success' => false, 'message' => 'Koleksi tidak ditemukan'], 404);
+        }
+
+        $exists = UserCollection::where('user_id', $userId)
+            ->where('collection_id', $collectionId)
+            ->exists();
+
+        if ($exists) {
+            return response()->json(['success' => false, 'message' => 'User sudah bergabung dengan koleksi ini'], 409);
+        }
+
+        $userCollection = UserCollection::create([
+            'user_id' => $userId,
+            'collection_id' => $collectionId,
+            'progress_percentage' => 0,
+            'status' => 'joined',
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Berhasil bergabung dengan koleksi',
+            'data' => $userCollection,
+        ], 201);
+    }
+
+    /**
+     * Add challenges to a collection.
+     */
+    public function addChallenges(Request $request, int|string|null $id = null): JsonResponse
+    {
+        $collectionId = $id ?? $request->input('collection_id');
+        $collection = Collection::find($collectionId);
+
+        if (! $collection) {
+            return response()->json(['success' => false, 'message' => 'Koleksi tidak ditemukan'], 404);
+        }
+
+        $request->validate([
+            'challenge_ids' => ['required', 'array'],
+            'challenge_ids.*' => ['integer', 'exists:challenges,id'],
+        ]);
+
+        $collection->challenges()->syncWithoutDetaching($request->input('challenge_ids'));
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Challenge berhasil ditambahkan ke koleksi',
+            'data' => $collection->load('challenges'),
+        ]);
+    }
+
+    /**
+     * Remove a challenge from a collection.
+     */
+    public function removeChallenge(Request $request, int|string|null $collectionId = null, int|string|null $challengeId = null): JsonResponse
+    {
+        $collectionId = $collectionId ?? $request->input('collection_id');
+        $challengeId = $challengeId ?? $request->input('challenge_id');
+
+        $collection = Collection::find($collectionId);
+
+        if (! $collection) {
+            return response()->json(['success' => false, 'message' => 'Koleksi tidak ditemukan'], 404);
+        }
+
+        $collection->challenges()->detach($challengeId);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Challenge berhasil dihapus dari koleksi',
         ]);
     }
 }

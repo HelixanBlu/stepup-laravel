@@ -7,46 +7,44 @@ use Illuminate\Database\Seeder;
 
 class RewardSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         $rewards = [
             [
-                'name_reward' => 'Tumbler StepUp Sport 750ml',
-                'description' => 'Tumbler stainless steel tahan dingin 24 jam dengan logo StepUp eksklusif.',
-                'poin' => 150,
-                'gambar' => 'tumbler-sport.png',
-                'stok' => 25,
-            ],
-            [
-                'name_reward' => 'Voucher Diskon Sepatu Rp 50.000',
-                'description' => 'Voucher potongan belanja sepatu lari di official store partner.',
-                'poin' => 200,
-                'gambar' => 'voucher-50k.png',
+                'name_reward' => 'Voucher Kopi Gratis',
+                'description' => 'Dapatkan satu cup kopi gratis di kantin kampus.',
+                'poin' => 500,
                 'stok' => 50,
             ],
             [
-                'name_reward' => 'Jersey Lari StepUp Dry-Fit',
-                'description' => 'Jersey olahraga breathable ringan dan nyaman untuk lari jarak jauh.',
-                'poin' => 350,
-                'gambar' => 'jersey-running.png',
-                'stok' => 15,
+                'name_reward' => 'Diskon 20% Kantin',
+                'description' => 'Diskon 20% untuk pembelian di kantin kampus berlaku satu hari.',
+                'poin' => 300,
+                'stok' => 100,
             ],
             [
-                'name_reward' => 'Hand Grip Adjustable 10-60kg',
-                'description' => 'Alat latihan kekuatan genggaman tangan dengan resistance yang dapat disesuaikan.',
-                'poin' => 100,
-                'gambar' => 'hand-grip.png',
-                'stok' => 40,
+                'name_reward' => 'Merchandise StepUp T-Shirt',
+                'description' => 'Kaos eksklusif StepUp dengan desain limited edition.',
+                'poin' => 2000,
+                'stok' => 20,
             ],
             [
-                'name_reward' => 'Smartwatch Sport Strap Silicone',
-                'description' => 'Tali pengganti smartwatch bahan silikon anti-keringat ukuran 20mm/22mm.',
-                'poin' => 120,
-                'gambar' => 'watch-strap.png',
+                'name_reward' => 'Voucher Gym 1 Bulan',
+                'description' => 'Akses gratis ke gym kampus selama satu bulan penuh.',
+                'poin' => 5000,
+                'stok' => 10,
+            ],
+            [
+                'name_reward' => 'Tumbler StepUp',
+                'description' => 'Tumbler stainless steel StepUp edisi terbatas.',
+                'poin' => 1500,
                 'stok' => 30,
+            ],
+            [
+                'name_reward' => 'Voucher Makan Siang',
+                'description' => 'Voucher makan siang gratis di kafetaria kampus.',
+                'poin' => 800,
+                'stok' => 75,
             ],
         ];
 

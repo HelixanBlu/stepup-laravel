@@ -42,7 +42,7 @@ test('guests cannot access badge management', function () {
 });
 
 test('badge management searches and filters badges with their relationships and earners', function () {
-    $user = User::factory()->create();
+    $user = User::factory()->admin()->create();
     $earner = User::factory()->create();
     $challenge = badgeChallenge();
     $collection = Collection::create(['name' => 'Daily Fitness']);
@@ -78,7 +78,7 @@ test('badge management searches and filters badges with their relationships and 
 
 test('authenticated users can create update with preserved and replacement icon and delete badges', function () {
     Storage::fake('public');
-    $user = User::factory()->create();
+    $user = User::factory()->admin()->create();
     $earner = User::factory()->create();
     $challenge = badgeChallenge();
     $collection = Collection::create(['name' => 'Starter Collection']);
@@ -154,7 +154,7 @@ test('authenticated users can create update with preserved and replacement icon 
 });
 
 test('badge fields and optional relationships are validated', function () {
-    $user = User::factory()->create();
+    $user = User::factory()->admin()->create();
 
     $this->actingAs($user)
         ->from(route('admin.badges.create'))
@@ -181,5 +181,5 @@ test('badge seeder can be run twice without duplicating badges', function () {
     (new BadgeSeeder)->run();
     (new BadgeSeeder)->run();
 
-    expect(Badge::count())->toBe(5);
+    expect(Badge::count())->toBe(6);
 });

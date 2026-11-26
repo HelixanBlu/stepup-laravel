@@ -27,7 +27,7 @@ test('guests cannot access collection management', function () {
 });
 
 test('collection management searches names, counts challenges, and shows details', function () {
-    $user = User::factory()->create();
+    $user = User::factory()->admin()->create();
     $challenge = collectionChallenge();
     $collection = Collection::create([
         'name' => 'Daily Fitness',
@@ -54,7 +54,7 @@ test('collection management searches names, counts challenges, and shows details
 
 test('authenticated users can create update associations and delete a collection without deleting challenges', function () {
     Storage::fake('public');
-    $user = User::factory()->create();
+    $user = User::factory()->admin()->create();
     $firstChallenge = collectionChallenge();
     $secondChallenge = collectionChallenge(['title' => 'Distance Builder', 'goal_type' => 'distance']);
 
@@ -126,7 +126,7 @@ test('authenticated users can create update associations and delete a collection
 });
 
 test('collection names and selected challenges are validated', function () {
-    $user = User::factory()->create();
+    $user = User::factory()->admin()->create();
 
     $this->actingAs($user)
         ->from(route('admin.collections.create'))

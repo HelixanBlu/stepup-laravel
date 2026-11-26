@@ -28,7 +28,7 @@ test('guests cannot access challenge management', function () {
 });
 
 test('challenge management searches titles without a status filter', function () {
-    $user = User::factory()->create();
+    $user = User::factory()->admin()->create();
     $matchingChallenge = Challenge::create(challengePayload());
     Challenge::create(challengePayload([
         'title' => 'Monthly Distance Goal',
@@ -56,7 +56,7 @@ test('challenge management searches titles without a status filter', function ()
 
 test('authenticated users can create update with preserved banner and delete challenges', function () {
     Storage::fake('public');
-    $user = User::factory()->create();
+    $user = User::factory()->admin()->create();
 
     $this->actingAs($user)
         ->post(route('admin.challenges.store'), challengePayload([
@@ -126,7 +126,7 @@ test('authenticated users can create update with preserved banner and delete cha
 });
 
 test('challenge dates and values are validated', function () {
-    $user = User::factory()->create();
+    $user = User::factory()->admin()->create();
 
     $this->actingAs($user)
         ->from(route('admin.challenges.create'))

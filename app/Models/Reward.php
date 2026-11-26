@@ -3,15 +3,19 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Yajra\Oci8\Eloquent\OracleEloquent as Model;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Reward extends Model
 {
     use HasFactory;
 
     protected $table = 'rewards';
+
     protected $primaryKey = 'id_reward';
+
     public $incrementing = true;
+
     protected $keyType = 'int';
 
     protected $fillable = [
@@ -27,7 +31,7 @@ class Reward extends Model
         'stok' => 'integer',
     ];
 
-    public function redemptions()
+    public function redemptions(): HasMany
     {
         return $this->hasMany(Redemption::class, 'reward_id', 'id_reward');
     }
