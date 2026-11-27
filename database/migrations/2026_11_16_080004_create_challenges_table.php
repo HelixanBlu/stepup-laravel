@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('challenges', function (Blueprint $table) {
-            $table->id();
+            $table->id('challenge_id');
             $table->string('title');
             $table->text('description')->nullable();
             $table->string('banner_image')->nullable();

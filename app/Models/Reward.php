@@ -12,7 +12,7 @@ class Reward extends Model
 
     protected $table = 'rewards';
 
-    protected $primaryKey = 'id_reward';
+    protected $primaryKey = 'reward_id';
 
     public $incrementing = true;
 
@@ -33,6 +33,16 @@ class Reward extends Model
 
     public function redemptions(): HasMany
     {
-        return $this->hasMany(Redemption::class, 'reward_id', 'id_reward');
+        return $this->hasMany(Redemption::class, 'reward_id', 'reward_id');
+    }
+
+    public function getIdAttribute(): mixed
+    {
+        return $this->attributes['reward_id'] ?? null;
+    }
+
+    public function getIdRewardAttribute(): mixed
+    {
+        return $this->attributes['reward_id'] ?? null;
     }
 }

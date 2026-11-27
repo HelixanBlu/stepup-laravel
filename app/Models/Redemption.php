@@ -12,6 +12,12 @@ class Redemption extends Model
 
     protected $table = 'redemptions';
 
+    protected $primaryKey = 'redemption_id';
+
+    public $incrementing = true;
+
+    protected $keyType = 'int';
+
     protected $fillable = [
         'user_id',
         'reward_id',
@@ -27,11 +33,16 @@ class Redemption extends Model
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id', 'user_id');
     }
 
     public function reward(): BelongsTo
     {
-        return $this->belongsTo(Reward::class, 'reward_id', 'id_reward');
+        return $this->belongsTo(Reward::class, 'reward_id', 'reward_id');
+    }
+
+    public function getIdAttribute(): mixed
+    {
+        return $this->attributes['redemption_id'] ?? null;
     }
 }

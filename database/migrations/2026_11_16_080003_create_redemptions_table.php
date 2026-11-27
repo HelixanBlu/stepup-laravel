@@ -12,10 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('redemptions', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->unsignedBigInteger('reward_id');
-            $table->foreign('reward_id')->references('id_reward')->on('rewards')->cascadeOnDelete();
+            $table->id('redemption_id');
+            $table->foreignId('user_id')->constrained('users', 'user_id')->cascadeOnDelete();
+            $table->foreignId('reward_id')->constrained('rewards', 'reward_id')->cascadeOnDelete();
             $table->integer('poin_digunakan');
             $table->string('nama_reward');
             $table->timestamp('tanggal_redeem')->useCurrent();

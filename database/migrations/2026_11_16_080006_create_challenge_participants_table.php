@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('challenge_participants', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('challenge_id')->constrained('challenges')->cascadeOnDelete();
-            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->id('challenge_participant_id');
+            $table->foreignId('challenge_id')->constrained('challenges', 'challenge_id')->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained('users', 'user_id')->cascadeOnDelete();
             $table->integer('current_progress')->default(0);
             $table->string('completion_status', 50)->default('in_progress'); // in_progress, completed
             $table->timestamp('joined_at')->useCurrent();

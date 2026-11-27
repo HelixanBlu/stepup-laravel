@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('community', function (Blueprint $table) {
-            $table->id();
+            $table->id('community_id');
             $table->text('deskripsi')->nullable();
             $table->string('gambar')->nullable();
             $table->integer('langkah')->default(0);
             $table->decimal('jarak', 8, 2)->default(0);
             $table->integer('kalori')->default(0);
-            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained('users', 'user_id')->cascadeOnDelete();
             $table->timestamps();
         });
     }
