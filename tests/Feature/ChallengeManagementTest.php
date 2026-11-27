@@ -101,27 +101,12 @@ test('authenticated users can create update with preserved banner and delete cha
         'created_at' => now(),
         'updated_at' => now(),
     ]);
-    $collectionId = DB::table('collections')->insertGetId([
-        'name' => 'Starter Collection',
-        'difficulty' => 'easy',
-        'status' => 'active',
-        'created_at' => now(),
-        'updated_at' => now(),
-    ]);
-    DB::table('collection_challenges')->insert([
-        'collection_id' => $collectionId,
-        'challenge_id' => $challenge->id,
-        'created_at' => now(),
-        'updated_at' => now(),
-    ]);
-
     $this->actingAs($user)
         ->delete(route('admin.challenges.destroy', $challenge))
         ->assertRedirect(route('admin.challenges.index'));
 
     $this->assertDatabaseMissing('challenges', ['id' => $challenge->id]);
     $this->assertDatabaseMissing('challenge_participants', ['challenge_id' => $challenge->id]);
-    $this->assertDatabaseMissing('collection_challenges', ['challenge_id' => $challenge->id]);
     Storage::disk('public')->assertMissing($originalBanner);
 });
 

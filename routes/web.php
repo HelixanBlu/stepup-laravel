@@ -1,8 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\BadgeController as AdminBadgeController;
 use App\Http\Controllers\Admin\ChallengeController as AdminChallengeController;
-use App\Http\Controllers\Admin\CollectionController as AdminCollectionController;
 use App\Http\Controllers\Admin\CommunityController as AdminCommunityController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\RewardController as AdminRewardController;
@@ -63,9 +61,7 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
     Route::get('dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
 
     Route::resource('rewards', AdminRewardController::class)->except(['show']);
-    Route::resource('badges', AdminBadgeController::class)->except(['show']);
     Route::resource('challenges', AdminChallengeController::class)->except(['show']);
-    Route::resource('collections', AdminCollectionController::class);
 
     // Users management
     Route::resource('users', AdminUserController::class)->except(['create', 'store', 'show']);

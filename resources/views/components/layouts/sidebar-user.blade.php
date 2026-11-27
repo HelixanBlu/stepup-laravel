@@ -37,7 +37,7 @@
             :href="route('user.community.index')"
             icon="community"
             :active="request()->routeIs('user.community.*')"
-        >Community</x-layouts.sidebar-link>
+        >Socials</x-layouts.sidebar-link>
 
         {{-- Admin Panel — hanya tampil jika role admin --}}
         @if(auth()->user()?->role === 'admin')
@@ -58,20 +58,6 @@
             >Challenge Management</x-layouts.sidebar-link>
 
             <x-layouts.sidebar-link
-                :href="route('admin.collections.index')"
-                icon="collections"
-                tone="admin"
-                :active="request()->routeIs('admin.collections.*')"
-            >Collections Management</x-layouts.sidebar-link>
-
-            <x-layouts.sidebar-link
-                :href="route('admin.badges.index')"
-                icon="badges"
-                tone="admin"
-                :active="request()->routeIs('admin.badges.*')"
-            >Badge Management</x-layouts.sidebar-link>
-
-            <x-layouts.sidebar-link
                 :href="route('admin.rewards.index')"
                 icon="rewards"
                 tone="admin"
@@ -83,7 +69,7 @@
                 icon="community"
                 tone="admin"
                 :active="request()->routeIs('admin.community.*')"
-            >Moderasi Community</x-layouts.sidebar-link>
+            >Moderasi Socials</x-layouts.sidebar-link>
         @endif
 
     </nav>

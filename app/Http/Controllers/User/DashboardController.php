@@ -14,7 +14,6 @@ class DashboardController extends Controller
 
         $totalJoined = $user->challengeParticipants()->count();
         $totalCompleted = $user->completedChallenges()->count();
-        $totalBadges = $user->badges()->count();
         $totalRedemptions = $user->redemptions()->count();
 
         $activeChallenges = Challenge::where('status', 'active')
@@ -44,7 +43,6 @@ class DashboardController extends Controller
             'user',
             'totalJoined',
             'totalCompleted',
-            'totalBadges',
             'totalRedemptions',
             'activeChallenges',
             'recentRedemptions'

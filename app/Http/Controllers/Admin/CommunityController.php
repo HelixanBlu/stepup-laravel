@@ -34,6 +34,6 @@ class CommunityController extends Controller
         $community->delete();
 
         return redirect()->route('admin.community.index')
-            ->with('success', 'Post community berhasil dihapus.');
+            ->with('success', 'Post Socials berhasil dihapus.');
     }
 }

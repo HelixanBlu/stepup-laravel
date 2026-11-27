@@ -16,7 +16,6 @@ class ProfileController extends Controller
         $user = User::withCount([
             'challengeParticipants as total_challenges_joined',
             'completedChallenges as total_challenges_completed',
-            'badges as total_badges',
             'redemptions as total_redemptions',
         ])->find($id);
 
@@ -39,7 +38,6 @@ class ProfileController extends Controller
                 'foto_profile' => $user->foto_profile,
                 'total_challenges_joined' => $user->total_challenges_joined,
                 'total_challenges_completed' => $user->total_challenges_completed,
-                'total_badges' => $user->total_badges,
                 'total_redemptions' => $user->total_redemptions,
             ],
         ]);

@@ -48,18 +48,6 @@
             :active="request()->routeIs('admin.challenges.*')"
         >Challenges</x-layouts.sidebar-link>
 
-        <x-layouts.sidebar-link
-            :href="route('admin.collections.index')"
-            icon="collections"
-            :active="request()->routeIs('admin.collections.*')"
-        >Collections</x-layouts.sidebar-link>
-
-        <x-layouts.sidebar-link
-            :href="route('admin.badges.index')"
-            icon="badges"
-            :active="request()->routeIs('admin.badges.*')"
-        >Badges</x-layouts.sidebar-link>
-
         <p x-show="open" x-transition.opacity class="px-4 pt-4 pb-1 text-xs font-semibold uppercase tracking-widest text-gray-500">
             Konten
         </p>
@@ -68,7 +56,7 @@
             :href="route('admin.community.index')"
             icon="community"
             :active="request()->routeIs('admin.community.*')"
-        >Community</x-layouts.sidebar-link>
+        >Socials</x-layouts.sidebar-link>
 
     </nav>
 

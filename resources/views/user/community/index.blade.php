@@ -1,4 +1,4 @@
-<x-layouts.app-user title="Community">
+<x-layouts.app-user title="Socials">
 
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
@@ -8,7 +8,7 @@
         {{-- Header --}}
         <div class="rounded-2xl bg-gradient-to-r from-indigo-600 to-violet-600 p-6 text-white shadow-lg flex items-center justify-between gap-4">
             <div>
-                <h1 class="text-lg font-bold">StepUp Community</h1>
+                <h1 class="text-lg font-bold">StepUp Socials</h1>
                 <p class="text-sm text-indigo-200">Bagikan perjalanan kebugaran Anda, rayakan pencapaian!</p>
             </div>
             <button onclick="openPostModal()"
@@ -34,7 +34,7 @@
     {{-- RIGHT: Leaderboard --}}
     <div class="space-y-5">
         <div class="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 shadow-sm">
-            <h2 class="text-base font-bold text-gray-900 dark:text-white mb-4">🏆 Leaderboard Community</h2>
+            <h2 class="text-base font-bold text-gray-900 dark:text-white mb-4">🏆 Leaderboard Socials</h2>
             <div id="leaderboardList" class="space-y-3">
                 <p class="text-sm text-gray-400 text-center py-4">Memuat...</p>
             </div>

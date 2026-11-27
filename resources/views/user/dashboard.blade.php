@@ -15,7 +15,7 @@
     </div>
 
     {{-- Stats --}}
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
         <div class="rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-4 shadow-sm text-center">
             <p class="text-2xl font-bold text-indigo-600 dark:text-indigo-400">{{ $totalJoined }}</p>
             <p class="mt-1 text-xs text-gray-500">Challenge Diikuti</p>
@@ -23,10 +23,6 @@
         <div class="rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-4 shadow-sm text-center">
             <p class="text-2xl font-bold text-green-600 dark:text-green-400">{{ $totalCompleted }}</p>
             <p class="mt-1 text-xs text-gray-500">Challenge Selesai</p>
-        </div>
-        <div class="rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-4 shadow-sm text-center">
-            <p class="text-2xl font-bold text-amber-600 dark:text-amber-400">{{ $totalBadges }}</p>
-            <p class="mt-1 text-xs text-gray-500">Badge Diraih</p>
         </div>
         <div class="rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-4 shadow-sm text-center">
             <p class="text-2xl font-bold text-pink-600 dark:text-pink-400">{{ $totalRedemptions }}</p>
@@ -108,7 +104,7 @@
                    class="flex items-center gap-4 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4 shadow-sm hover:shadow-md transition-shadow">
                     <div class="w-10 h-10 rounded-xl bg-pink-100 dark:bg-pink-900/30 flex items-center justify-center text-xl shrink-0">👥</div>
                     <div>
-                        <p class="text-sm font-semibold text-gray-900 dark:text-white">Community</p>
+                        <p class="text-sm font-semibold text-gray-900 dark:text-white">Socials</p>
                         <p class="text-xs text-gray-500">Bagikan aktivitasmu</p>
                     </div>
                 </a>

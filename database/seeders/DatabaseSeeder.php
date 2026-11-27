@@ -12,8 +12,6 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             RewardSeeder::class,
             ChallengeSeeder::class,
-            CollectionSeeder::class,
-            BadgeSeeder::class,
             CommunitySeeder::class,
         ]);
     }

@@ -1,8 +1,8 @@
-<x-layouts.admin title="Kelola Community">
+<x-layouts.admin title="Kelola Socials">
     <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">Community Feed</h2>
-            <p class="mt-0.5 text-sm text-gray-500">Moderasi postingan community pengguna.</p>
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white">Socials Feed</h2>
+            <p class="mt-0.5 text-sm text-gray-500">Moderasi postingan Socials pengguna.</p>
         </div>
     </div>
 
@@ -25,7 +25,7 @@
 
     @if($posts->isEmpty())
         <div class="rounded-xl border border-dashed border-gray-300 dark:border-gray-700 p-10 text-center">
-            <p class="text-sm text-gray-500">Belum ada postingan community.</p>
+            <p class="text-sm text-gray-500">Belum ada postingan Socials.</p>
         </div>
     @else
         <div class="space-y-4">

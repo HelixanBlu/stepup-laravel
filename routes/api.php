@@ -1,8 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\BadgeController;
 use App\Http\Controllers\Api\ChallengeController;
-use App\Http\Controllers\Api\CollectionController;
 use App\Http\Controllers\Api\CommunityController;
 use App\Http\Controllers\Api\JavafxController;
 use App\Http\Controllers\Api\ProfileController;
@@ -36,8 +34,6 @@ Route::prefix('profile')->group(function () {
 |--------------------------------------------------------------------------
 */
 Route::apiResource('rewards', RewardController::class)->whereNumber('reward');
-Route::apiResource('collections', CollectionController::class)->whereNumber('collection');
-Route::apiResource('badges', BadgeController::class)->whereNumber('badge');
 Route::apiResource('challenges', ChallengeController::class)->whereNumber('challenge');
 Route::apiResource('users', UserController::class)->whereNumber('user')->except(['store']);
 Route::apiResource('community', CommunityController::class)->whereNumber('community');
@@ -45,11 +41,6 @@ Route::apiResource('community', CommunityController::class)->whereNumber('commun
 // Challenge extra actions
 Route::post('challenges/{challenge}/join', [ChallengeController::class, 'join'])->whereNumber('challenge');
 Route::post('challenges/{challenge}/log_progress', [ChallengeController::class, 'logProgress'])->whereNumber('challenge');
-
-// Collection extra actions
-Route::post('collections/{collection}/join', [CollectionController::class, 'join'])->whereNumber('collection');
-Route::post('collections/{collection}/add_challenges', [CollectionController::class, 'addChallenges'])->whereNumber('collection');
-Route::delete('collections/{collection}/challenges/{challenge}', [CollectionController::class, 'removeChallenge'])->whereNumber(['collection', 'challenge']);
 
 // Community comments
 Route::get('community/{community}/comments', [CommunityController::class, 'getComments'])->whereNumber('community');
